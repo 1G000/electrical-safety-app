@@ -81,7 +81,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Причина проверки:`,
+                text: `Причина проверки: ${currentUser.reason}`,
                 size: 24,
               }),
             ],
@@ -153,7 +153,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Провела проверку знаний ПУЭ, ПОТЭУ, ПТЭЭП и других нормативных документов в соотвествиии с занимаемой должностью.`,
+                text: `Провела проверку знаний ПУЭ, ПОТЭУ, ПТЭЭП и других нормативных документов в соотвествии с занимаемой должностью.`,
                 size: 24,
               }),
             ],
@@ -179,7 +179,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Фамилия, имя, отчество: ${currentUser.name} ${currentUser.surname} ${currentUser.thirdname}`,
+                text: `Фамилия, имя, отчество: ${currentUser.surname} ${currentUser.name} ${currentUser.thirdname}`,
                 size: 24,
               }),
             ],
@@ -215,7 +215,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Дата предыдущей проверки:`,
+                text: `Дата предыдущей проверки: ${currentUser.previousDate}`,
                 size: 24,
               }),
             ],
@@ -227,7 +227,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Оценка, группа по электробезопасности:`,
+                text: `Оценка, группа по электробезопасности: удовлетворительно, ${currentUser.group} до 1000В`,
                 size: 24,
               }),
             ],
@@ -253,7 +253,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `По устройству энергоустановок и технической эксплуатации:`,
+                text: `По устройству энергоустановок и технической эксплуатации: удовлетворительно`,
                 size: 24,
               }),
             ],
@@ -265,7 +265,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `По охране труда`,
+                text: `По охране труда: удовлетворительно`,
                 size: 24,
               }),
             ],
@@ -277,7 +277,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `По пожарной безопасности:`,
+                text: `По пожарной безопасности: удовлетворительно`,
                 size: 24,
               }),
             ],
@@ -289,7 +289,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Других правил и инструкций:`,
+                text: `Других правил и инструкций: удовлетворительно`,
                 size: 24,
               }),
             ],
@@ -315,7 +315,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Общая оценка:`,
+                text: `Общая оценка: удовлетворительно`,
                 size: 24,
               }),
             ],
@@ -327,7 +327,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Группа по электробезопасности:`,
+                text: `Группа по электробезопасности: ${currentUser.group} до 1000В`,
                 size: 24,
               }),
             ],
@@ -351,7 +351,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Допущен к работе в качестве:`,
+                text: `Допущен к работе в качестве: ${currentUser.personalType} персонал`,
                 size: 24,
               }),
             ],

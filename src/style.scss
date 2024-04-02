@@ -13,7 +13,7 @@ body {
   align-items: center;
 }
 
-h2 {
+h1 {
   margin: 10px auto;
   letter-spacing: 5px;
   text-align: center;
@@ -25,12 +25,12 @@ h2 {
 
 .header {
   margin: 15px;
-  height: 350px;
+  height: 400px;
   width: 80%;
-  background: url('../public/img/11c56059-c499-4fce-9fc8-8b5db389f656.png');
+  background: url("../public/img/11c56059-c499-4fce-9fc8-8b5db389f656.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 20px;
 }
 
