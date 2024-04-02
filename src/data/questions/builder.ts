@@ -1,6 +1,4 @@
 import * as docx from 'docx';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
 import saveAs from 'save-as';
 
 import { currentUser } from '../../components/loginForm/loginForm';
