@@ -1,8 +1,8 @@
 import { currentUser } from '../loginForm/loginForm';
-import questions from '../../../public/questions/questions';
+import questions from '../../data/questions/questions';
 const answersQty: number = 10;
 const maxErrorsQty: number = 2;
-import generateProtocol from '../../../public/questions/builder';
+import generateProtocol from '../../data/questions/builder';
 
 export function createHeading() {
   const container = document.querySelector('.container');
@@ -10,7 +10,7 @@ export function createHeading() {
     container.innerHTML = '';
     const heading = document.createElement('p');
     heading.classList.add('heading');
-    heading.innerHTML = `${currentUser.name} ${currentUser.surname} ${currentUser.thirdname}<br>${currentUser.profession}`;
+    heading.innerHTML = `Приветствуем Вас, ${currentUser.name} ${currentUser.thirdname}!`;
     container.append(heading);
   }
 }
@@ -69,6 +69,7 @@ export function createTest(): void {
       const answers = question.answers.sort(() => Math.random() - 0.5);
       answers.forEach((answer, index) => {
         const radioBtn = document.createElement('input');
+        radioBtn.classList.add('radio-btn');
         radioBtn.addEventListener('click', undisableBtn);
         radioBtn.type = 'radio';
         if (answer.isRight === true) {

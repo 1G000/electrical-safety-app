@@ -1,5 +1,5 @@
 import './style.scss';
-import createLoginForm from './Новая папка/loginForm/loginForm';
+import createLoginForm from './components/loginForm/loginForm';
 
 function createContainer(): void {
   const body = <HTMLBodyElement>document.querySelector('.body');

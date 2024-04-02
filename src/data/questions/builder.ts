@@ -3,8 +3,8 @@ import * as docx from 'docx';
 //@ts-ignore
 import saveAs from 'save-as';
 
-import { currentUser } from '../../src/Новая папка/loginForm/loginForm';
-import { comission } from '../data/comission';
+import { currentUser } from '../../components/loginForm/loginForm';
+import { comission } from '../comission';
 
 const daysInYear = 365;
 
