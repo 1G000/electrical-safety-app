@@ -447,6 +447,9 @@ export default function generateProtocol() {
   });
 
   docx.Packer.toBlob(doc).then((blob) => {
-    saveAs(blob, 'Protocol.docx');
+    saveAs(
+      blob,
+      `${currentUser.departament}_${currentUser.surname}_${currentUser.name}.docx`,
+    );
   });
 }

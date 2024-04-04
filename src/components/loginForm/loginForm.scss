@@ -65,21 +65,27 @@
   }
 }
 
-// p {
-//   font-weight: 600;
-// }
-
 li {
   font-size: 24px;
 }
 
-.radio-btn:hover,
-label:hover {
+select {
   cursor: pointer;
 }
 
-label:hover {
+.radio-btn:hover,
+#previous-date:hover {
+  cursor: pointer;
+}
+
+.answers-field label:hover {
+  cursor: pointer;
   text-decoration: underline;
+}
+
+.question-text {
+  margin: 10px auto;
+  font-weight: 600;
 }
 
 .answers-field {
@@ -145,4 +151,28 @@ label:hover {
 .group-text {
   font-size: 24px;
   margin-bottom: -10px;
+}
+
+.check-btn {
+  margin: 20px;
+  width: 150px;
+  height: 30px;
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.protocol-btn {
+  margin: 20px;
+  width: 150px;
+  height: 30px;
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

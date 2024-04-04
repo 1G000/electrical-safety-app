@@ -63,6 +63,7 @@ export function createTest(): void {
     questions.forEach((question, i) => {
       const questionItem = document.createElement('li');
       const questionText = document.createElement('p');
+      questionText.classList.add('question-text');
       const answersField = document.createElement('div');
       answersField.classList.add('answers-field');
 
@@ -91,13 +92,12 @@ export function createTest(): void {
       questionItem.append(questionText, answersField);
       questionsList.append(questionItem);
       container.append(questionsList);
-      
     });
 
     const checkBtn = document.createElement('button');
     checkBtn.disabled = true;
     checkBtn.classList.add('check-btn');
-    checkBtn.innerText = 'Проверить';
+    checkBtn.innerText = 'Завершить проверку';
     checkBtn.addEventListener('click', showErrors);
     container.append(checkBtn);
   }
