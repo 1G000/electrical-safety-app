@@ -432,7 +432,7 @@ export default function generateProtocol() {
           }),
           new docx.Paragraph({
             spacing: {
-              before: 350,
+              before: 300,
             },
             children: [
               new docx.TextRun({

@@ -1,19 +1,7 @@
 import './loginForm.scss';
 import { createHeading, createTest } from '../testPage/testPage';
-
-const groups: [string, string, string] = ['II', 'III', 'IV'];
-const reasons: [string, string, string] = [
-  'Очередная',
-  'Первичная',
-  'Внеочередная',
-];
-const personalTypes: [string, string, string, string, string] = [
-  'Ремонтный',
-  'Административно-технический',
-  'Электротехнологический',
-  'Оперативный',
-  'Оперативно-ремонтный',
-];
+import { groups, reasons, personalTypes } from '../../data/data';
+import { User } from '../interfaces';
 
 function createSelect(id: string, area: string, arr: string[]) {
   const cont = document.querySelector('.' + area);
@@ -62,18 +50,6 @@ function createInputDate(): HTMLDivElement {
   previousDateTitle.setAttribute('for', `dateForm`);
   dateField.append(previousDateTitle, previousDate);
   return dateField;
-}
-
-interface User {
-  reason: string;
-  name: string;
-  surname: string;
-  thirdname: string;
-  profession: string;
-  personalType: string;
-  group: string;
-  previousDate: string;
-  departament: string;
 }
 
 export const currentUser: User = {
@@ -141,9 +117,9 @@ function submitHandler(event: Event): void {
   currentUser.profession = profession;
   currentUser.personalType = personalType;
   currentUser.group = group;
-  currentUser.previousDate = previousDate;
+  currentUser.previousDate = previousDate.split('-').reverse().join('.');
   currentUser.departament = departament;
-
+  console.log(currentUser);
   createHeading();
   createTest();
 }
