@@ -2,55 +2,11 @@ import './loginForm.scss';
 import { createHeading, createTest } from '../testPage/testPage';
 import { groups, reasons, personalTypes } from '../../data/data';
 import { User } from '../interfaces';
-
-function createSelect(id: string, area: string, arr: string[]) {
-  const cont = document.querySelector('.' + area);
-  if (cont) {
-    const groupChangeSelect = document.createElement('select');
-    groupChangeSelect.id = id;
-    arr.forEach((gr) => {
-      const group = document.createElement('option');
-      group.innerHTML = gr;
-      group.value = gr;
-      groupChangeSelect.append(group);
-    });
-    cont.append(groupChangeSelect);
-  }
-}
-
-function createPersSelect(arr: string[]): HTMLDivElement {
-  const persField = <HTMLDivElement>document.createElement('div');
-  persField.classList.add('input-field');
-  const groupChangeSelect = document.createElement('select');
-  groupChangeSelect.id = 'pers-select';
-  arr.forEach((gr) => {
-    const group = document.createElement('option');
-    group.innerHTML = gr;
-    group.value = gr;
-    groupChangeSelect.append(group);
-  });
-  const persTitle = document.createElement('label');
-  persTitle.classList.add('login-form-label');
-  persTitle.innerHTML = `Категория персонала`;
-  persTitle.setAttribute('for', `groupChangeSelect`);
-  persField.append(persTitle, groupChangeSelect);
-  return persField;
-}
-
-function createInputDate(): HTMLDivElement {
-  const dateField = <HTMLDivElement>document.createElement('div');
-  dateField.classList.add('input-field');
-  const previousDate = document.createElement('input');
-  previousDate.type = 'date';
-  previousDate.id = 'previous-date';
-  previousDate.name = `dateForm`;
-  const previousDateTitle = document.createElement('label');
-  previousDateTitle.classList.add('login-form-label');
-  previousDateTitle.innerHTML = `Дата`;
-  previousDateTitle.setAttribute('for', `dateForm`);
-  dateField.append(previousDateTitle, previousDate);
-  return dateField;
-}
+import { createInputDate } from '../dateInput/dateInput';
+import { createInput } from '../input/input';
+import { createSelect } from '../select/select';
+import { createBtn } from '../button/button';
+import { ButtonTypes } from '../button/button';
 
 export const currentUser: User = {
   reason: '',
@@ -64,26 +20,26 @@ export const currentUser: User = {
   departament: '',
 };
 
-function createInputField(
-  name: string,
-  labelText: string,
-  placeholder: string,
-): HTMLDivElement {
-  const inputField = <HTMLDivElement>document.createElement('div');
-  inputField.classList.add('input-field');
-  const label = <HTMLLabelElement>document.createElement('label');
-  label.classList.add('login-form-label');
-  label.innerHTML = `${labelText}`;
-  label.setAttribute('for', `${name}`);
-  inputField.append(label);
-  const input = <HTMLInputElement>document.createElement('input');
-  input.type = 'text';
-  input.id = `${name}`;
-  input.name = `${name}`;
-  input.placeholder = `${placeholder}`;
-  input.setAttribute('autocomplete', 'off');
-  inputField.append(input);
-  return inputField;
+interface  InputEntry {
+  id: string,
+  label: string,
+  defaultValue: string
+}
+
+const inputData: InputEntry[] = [
+  { id: 'name-input', label: 'Имя', defaultValue: 'Иван' },
+  { id: 'surname-input', label: 'Фамилия', defaultValue: 'Иванов' },
+  { id: 'thirdname-input', label: 'Отчество', defaultValue: 'Иванович' },
+  { id: 'profession-input', label: 'Должность', defaultValue: 'Электромонтажник по обслуживанию домовых систем' },
+  { id: 'departament-input', label: 'Название подразделения', defaultValue: 'Полное название подразделения' },
+];
+
+function createInputs (data: InputEntry[]): { [key: string]: HTMLDivElement } {
+  const inputs: { [key: string]: HTMLDivElement } = {};
+  data.forEach((entry: InputEntry) => {
+    inputs[entry.id] = createInput(entry.id, entry.label, entry.defaultValue);
+  });
+  return inputs;
 }
 
 function submitHandler(event: Event): void {
@@ -100,7 +56,7 @@ function submitHandler(event: Event): void {
   const personalType = (<HTMLSelectElement>(
     document.querySelector('#pers-select')
   )).value;
-  const group = (<HTMLSelectElement>document.querySelector('#currentGroup'))
+  const group = (<HTMLSelectElement>document.querySelector('#groups-list'))
     .value;
   const previousDate = (<HTMLInputElement>(
     document.querySelector('#previous-date')
@@ -119,88 +75,54 @@ function submitHandler(event: Event): void {
   currentUser.group = group;
   currentUser.previousDate = previousDate.split('-').reverse().join('.');
   currentUser.departament = departament;
-  console.log(currentUser);
   createHeading();
   createTest();
+}
+
+
+function createDivElement(styleName: string) {
+  const div = <HTMLDivElement>document.createElement('div');
+  div.classList.add(styleName)
+  return div
 }
 
 export default function createLoginForm(): void {
   const container = <HTMLDivElement>document.querySelector('.container');
   container.innerHTML = '';
+  const formTitle = <HTMLHeadingElement>document.createElement('h1');
+  formTitle.innerHTML = '⚡Проверка знаний по электробезопасности⚡';
   const loginForm = <HTMLFormElement>document.createElement('form');
-  const loginFormContainerTop = <HTMLDivElement>document.createElement('div');
-  loginFormContainerTop.classList.add('login-form-container-top');
-  const loginFormContainer = <HTMLDivElement>document.createElement('div');
-  loginFormContainer.classList.add('login-form-container');
-  const loginFormContainerCenter = <HTMLDivElement>(
-    document.createElement('div')
-  );
-  loginFormContainerCenter.classList.add('login-form-container-center');
-  const loginFormLeft = <HTMLDivElement>document.createElement('div');
-  loginFormLeft.classList.add('login-form-left');
-  const loginFormRight = <HTMLDivElement>document.createElement('div');
-  loginFormRight.classList.add('login-form-right');
+  loginForm.method = 'get';
+  loginForm.classList.add('login-form');
+
+  const loginFormContainerTop = createDivElement('login-form-container-top')
+  const loginFormContainer = createDivElement('login-form-container')
+  const loginFormContainerCenter = createDivElement('login-form-container-center')
+  const loginFormLeft = createDivElement('login-form-left')
+  const loginFormRight = createDivElement('login-form-right')
+
   loginFormContainer.append(
     loginFormLeft,
     loginFormRight,
     loginFormContainerCenter,
   );
-  loginForm.method = 'get';
-  loginForm.classList.add('login-form');
-
-  const formTitle = <HTMLHeadingElement>document.createElement('h1');
-  const reasonTitle = <HTMLHeadingElement>document.createElement('p');
-  reasonTitle.classList.add('login-form-label');
-  reasonTitle.innerHTML = 'Укажите причину проверки знаний';
-  formTitle.innerHTML = '⚡Проверка знаний по электробезопасности⚡';
-  container.append(formTitle);
-  const inputFirstName = createInputField('name-input', 'Имя', 'Иван');
-  const inputSurName = createInputField('surname-input', 'Фамилия', 'Иванов');
-  const inputThirdName = createInputField(
-    'thirdname-input',
-    'Отчество',
-    'Иванович',
-  );
-  const inputProfession = createInputField(
-    'profession-input',
-    'Должность',
-    'Электромонтажник по обслуживанию домовых систем',
-  );
-  const inputDepartment = createInputField(
-    'departament-input',
-    'Название подразделения',
-    'Полное название подразделения',
-  );
-  const persSelect = createPersSelect(personalTypes);
-
+  const inputs = createInputs(inputData);
+  const persSelect = createSelect(personalTypes, 'pers-select', 'Категория персонала' );
+  const reasonsSelect = createSelect(reasons, 'reasons-list', "Укажите причину проверки" );
+  const groupsSelect = createSelect(groups,'groups-list','Группа' ,);
   const inputDate = createInputDate();
-  const loginBtn = <HTMLButtonElement>document.createElement('button');
-  loginBtn.textContent = 'Начать тест!';
-  loginBtn.value = 'start!';
-  loginBtn.type = 'submit';
-  loginBtn.classList.add('login-btn');
-  loginForm.addEventListener('submit', submitHandler);
-  container.append(loginForm);
-  loginForm.append(loginFormContainerTop, loginFormContainer);
-  loginFormContainerTop.append(reasonTitle);
-  createSelect('reasons-list', 'login-form-container-top', reasons);
-  loginFormLeft.append(inputSurName, inputFirstName, inputThirdName);
-  loginFormRight.append(inputDepartment, inputProfession, persSelect);
 
   const currentGroupTitle = document.createElement('h2');
   currentGroupTitle.innerHTML = 'Предыдущая проверка знаний';
   const currentGroupText = <HTMLHeadingElement>document.createElement('p');
   currentGroupText.classList.add('group-text');
-  loginFormContainerCenter.append(currentGroupTitle);
   currentGroupText.innerHTML = 'Группа';
-  // const needGroupText = <HTMLHeadingElement>document.createElement('p');
-  // needGroupText.classList.add('group-text');
-  // needGroupText.innerHTML = 'Требуемая группа по электробезопасности';
-  loginFormContainerCenter.append(inputDate);
-  loginFormContainerCenter.append(currentGroupText);
-  createSelect('currentGroup', 'login-form-container-center', groups);
-  // loginFormContainerCenter.append(needGroupText,inputDate);
-  // createSelect('assignedGroup', 'login-form-container-center', groups);
-
-  loginForm.append(loginBtn);
+  const loginBtn = createBtn('login-btn', 'Начать тест!', ButtonTypes.Submit)
+  loginFormContainerTop.append(reasonsSelect)
+  container.append(formTitle,loginForm);
+  loginForm.append(loginFormContainerTop, loginFormContainer, loginBtn);
+  loginFormLeft.append(inputs['surname-input'], inputs['name-input'], inputs['thirdname-input']);
+  loginFormRight.append(inputs['departament-input'], inputs['profession-input'], persSelect);
+  loginFormContainerCenter.append(currentGroupTitle,inputDate,groupsSelect);
+  loginForm.addEventListener('submit', submitHandler);
 }
