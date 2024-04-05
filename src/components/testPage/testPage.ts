@@ -81,9 +81,11 @@ export function createTest(): void {
         radioBtn.name = `answer${i}`;
         radioBtn.id = `answer${i}_${index}`;
         const answerItem = document.createElement('div');
+        answerItem.classList.add('answer-item');
+
         const answerText = document.createElement('label');
         answerText.setAttribute('for', `answer${i}_${index}`);
-        answerItem.classList.add('answer-item');
+
         answerText.innerText = answer.text;
         answerItem.append(radioBtn, answerText);
         answersField.append(answerItem);

@@ -4,18 +4,6 @@
   align-items: center;
   gap: 16px;
 
-  .login-form-container {
-    display: flex;
-    gap: 40px;
-
-    .login-form-left,
-    .login-form-right {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-  }
-
   #groups-list,
   #assignedGroup {
     font-size: 20px;
@@ -33,36 +21,6 @@
   flex-direction: column;
   align-items: center;
   gap: 5px;
-
-  input {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-  }
-
-  input:autofill {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-  }
-
-  input::placeholder {
-    font-size: 18px;
-  }
-
-  #name-input,
-  #surname-input,
-  #thirdname-input,
-  #profession-input,
-  #departament-input {
-    width: 350px;
-    height: 30px;
-    padding: 3px;
-
-    &:focus {
-      outline: none;
-    }
-  }
 }
 
 li {
@@ -125,7 +83,9 @@ select {
   padding: 3px;
 }
 
-#pers-select {
+#pers-select,
+#departaments-select,
+#fio-select {
   width: 350px;
   height: 30px;
   padding: 3px;

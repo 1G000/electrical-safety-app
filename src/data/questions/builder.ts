@@ -23,6 +23,7 @@ function getNextYearDate(): string {
   return date.toLocaleString('ru', options);
 }
 
+// eslint-disable-next-line max-lines-per-function
 export default function generateProtocol() {
   const doc = new docx.Document({
     sections: [

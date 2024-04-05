@@ -1,12 +1,20 @@
 import './loginForm.scss';
 import { createHeading, createTest } from '../testPage/testPage';
 import { groups, reasons, personalTypes } from '../../data/data';
+import { employeesBase } from '../../data/employees';
 import { User } from '../interfaces';
-import { createInputDate } from '../dateInput/dateInput';
-import { createInput } from '../input/input';
 import { createSelect } from '../select/select';
 import { createBtn } from '../button/button';
 import { ButtonTypes } from '../button/button';
+
+const departaments = employeesBase.map((el) => el.departament);
+const employeesNames = employeesBase.map((el) =>
+  el.employees.map((e) => e.name),
+);
+console.log(employeesNames);
+// const jobTitles = employeesBase
+//   .filter((element) => element.departament === 'РСУ')
+//   .map((el) => el.employees.map((e) => e.jobTitle));
 
 export const currentUser: User = {
   reason: '',
@@ -19,28 +27,6 @@ export const currentUser: User = {
   previousDate: '',
   departament: '',
 };
-
-interface  InputEntry {
-  id: string,
-  label: string,
-  defaultValue: string
-}
-
-const inputData: InputEntry[] = [
-  { id: 'name-input', label: 'Имя', defaultValue: 'Иван' },
-  { id: 'surname-input', label: 'Фамилия', defaultValue: 'Иванов' },
-  { id: 'thirdname-input', label: 'Отчество', defaultValue: 'Иванович' },
-  { id: 'profession-input', label: 'Должность', defaultValue: 'Электромонтажник по обслуживанию домовых систем' },
-  { id: 'departament-input', label: 'Название подразделения', defaultValue: 'Полное название подразделения' },
-];
-
-function createInputs (data: InputEntry[]): { [key: string]: HTMLDivElement } {
-  const inputs: { [key: string]: HTMLDivElement } = {};
-  data.forEach((entry: InputEntry) => {
-    inputs[entry.id] = createInput(entry.id, entry.label, entry.defaultValue);
-  });
-  return inputs;
-}
 
 function submitHandler(event: Event): void {
   event.preventDefault();
@@ -79,13 +65,6 @@ function submitHandler(event: Event): void {
   createTest();
 }
 
-
-function createDivElement(styleName: string) {
-  const div = <HTMLDivElement>document.createElement('div');
-  div.classList.add(styleName)
-  return div
-}
-
 export default function createLoginForm(): void {
   const container = <HTMLDivElement>document.querySelector('.container');
   container.innerHTML = '';
@@ -95,34 +74,54 @@ export default function createLoginForm(): void {
   loginForm.method = 'get';
   loginForm.classList.add('login-form');
 
-  const loginFormContainerTop = createDivElement('login-form-container-top')
-  const loginFormContainer = createDivElement('login-form-container')
-  const loginFormContainerCenter = createDivElement('login-form-container-center')
-  const loginFormLeft = createDivElement('login-form-left')
-  const loginFormRight = createDivElement('login-form-right')
-
-  loginFormContainer.append(
-    loginFormLeft,
-    loginFormRight,
-    loginFormContainerCenter,
+  const departament = createSelect(
+    departaments,
+    'departaments-select',
+    'Подразделение',
   );
-  const inputs = createInputs(inputData);
-  const persSelect = createSelect(personalTypes, 'pers-select', 'Категория персонала' );
-  const reasonsSelect = createSelect(reasons, 'reasons-list', "Укажите причину проверки" );
-  const groupsSelect = createSelect(groups,'groups-list','Группа' ,);
-  const inputDate = createInputDate();
+
+  function fillSelect(value) {
+    const employeesNames = employeesBase
+      .filter((element) => element.departament === value)
+      .map((el) => el.employees.map((e) => e.name));
+    createSelect(employeesNames, '', '');
+  }
+
+  function onSelectChange(event: Event) {
+    const target = <HTMLSelectElement>event.target;
+    const selectedValue = target.value;
+    console.log(selectedValue);
+    fillSelect(selectedValue);
+  }
+
+  departament.addEventListener('change', (event) => onSelectChange(event));
+
+  const employeeName = createSelect(employeesNames[0], 'fio-select', 'ФИО');
+
+  const persSelect = createSelect(
+    personalTypes,
+    'pers-select',
+    'Категория персонала',
+  );
+  const reasonsSelect = createSelect(
+    reasons,
+    'reasons-list',
+    'Укажите причину проверки',
+  );
+  const groupsSelect = createSelect(groups, 'groups-list', 'Группа');
 
   const currentGroupTitle = document.createElement('h2');
   currentGroupTitle.innerHTML = 'Предыдущая проверка знаний';
   const currentGroupText = <HTMLHeadingElement>document.createElement('p');
   currentGroupText.classList.add('group-text');
   currentGroupText.innerHTML = 'Группа';
-  const loginBtn = createBtn('login-btn', 'Начать тест!', ButtonTypes.Submit)
-  loginFormContainerTop.append(reasonsSelect)
-  container.append(formTitle,loginForm);
-  loginForm.append(loginFormContainerTop, loginFormContainer, loginBtn);
-  loginFormLeft.append(inputs['surname-input'], inputs['name-input'], inputs['thirdname-input']);
-  loginFormRight.append(inputs['departament-input'], inputs['profession-input'], persSelect);
-  loginFormContainerCenter.append(currentGroupTitle,inputDate,groupsSelect);
+  const loginBtn = createBtn('login-btn', 'Начать тест!', ButtonTypes.Submit);
+
+  container.append(formTitle, loginForm);
+
+  loginForm.append(departament, employeeName, persSelect);
+
+  loginForm.append(currentGroupTitle, groupsSelect, reasonsSelect);
+  loginForm.append(loginBtn);
   loginForm.addEventListener('submit', submitHandler);
 }
