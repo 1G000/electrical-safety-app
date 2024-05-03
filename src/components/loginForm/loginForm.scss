@@ -1,8 +1,23 @@
+@font-face {
+  font-family: "Caveat-Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/public/fonts/Caveat/Caveat-Regular.ttf");
+}
+
+header {
+  background: url("/public/img/header-photo.png");
+  width: 100%;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 
   #groups-list,
   #assignedGroup {
@@ -16,7 +31,8 @@
   font-size: 24px;
 }
 
-.input-field {
+.input-field,
+.employees_input-field {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,47 +86,12 @@ select {
   }
 }
 
-#previous-date {
-  width: 200px;
-  height: 30px;
-  padding: 3px;
-}
-
-#reasons-list {
-  font-size: 18px;
-  width: 200px;
-  height: 30px;
-  padding: 3px;
-}
-
-#pers-select,
 #departaments-select,
-#fio-select {
-  width: 350px;
+#employees-select {
+  width: 400px;
   height: 30px;
   padding: 3px;
   font-size: 18px;
-}
-
-.login-form-container-top {
-  align-items: center;
-  display: flex;
-  gap: 20px;
-}
-
-.login-form-container-center {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  gap: 20px;
-  padding: 10px;
-  background-color: rgb(143, 219, 255);
-}
-
-.group-text {
-  font-size: 24px;
-  margin-bottom: -10px;
 }
 
 .check-btn {
@@ -133,6 +114,86 @@ select {
   @media (hover: hover) {
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+.form_top-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  height: 170px;
+  width: 400px;
+}
+
+.certificate-section {
+  height: 230px;
+  width: 700px;
+  display: flex;
+  justify-content: center;
+
+  .certificate {
+    &_closed {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 350px;
+      height: 230px;
+      background-color: blue;
+
+      &-title {
+        font-size: 26px;
+        color: white;
+      }
+    }
+
+    &_open {
+      display: flex;
+      border: solid 4px blue;
+      background-color: rgb(255, 255, 255);
+      padding: 10px;
+      height: 230px;
+
+      &_left-side {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 5px;
+
+        p {
+          font-family: "Caveat-Regular", "Arial", sans-serif;
+          font-size: 26px;
+          color: blue;
+        }
+
+        #destText {
+          font-family: "Arial";
+          color: black;
+          font-size: 12px;
+          font-weight: 600;
+          margin: auto 0 0 0;
+        }
+      }
+
+      &_right-side {
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        border-left: solid 4px blue;
+
+        p {
+          text-align: center;
+          font-family: "Caveat-Regular", "Arial", sans-serif;
+          font-size: 24px;
+          color: blue;
+        }
+      }
     }
   }
 }

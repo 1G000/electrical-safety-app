@@ -1,28 +1,20 @@
 import './loginForm.scss';
 import { createHeading, createTest } from '../testPage/testPage';
-import { groups, reasons, personalTypes } from '../../data/data';
 import { employeesBase } from '../../data/employees';
 import { User } from '../interfaces';
-import { createSelect } from '../select/select';
+import { createDeptSelect } from '../select/select';
+import { createClosedSertificate } from '../certificate/certificate';
 import { createBtn } from '../button/button';
 import { ButtonTypes } from '../button/button';
+import generateProtocol from '../../data/questions/builder';
 
 const departaments = employeesBase.map((el) => el.departament);
-const employeesNames = employeesBase.map((el) =>
-  el.employees.map((e) => e.name),
-);
-console.log(employeesNames);
-// const jobTitles = employeesBase
-//   .filter((element) => element.departament === 'РСУ')
-//   .map((el) => el.employees.map((e) => e.jobTitle));
 
 export const currentUser: User = {
+  name:'',
   reason: '',
-  name: '',
-  surname: '',
-  thirdname: '',
   profession: '',
-  personalType: '',
+  category: '',
   group: '',
   previousDate: '',
   departament: '',
@@ -30,36 +22,19 @@ export const currentUser: User = {
 
 function submitHandler(event: Event): void {
   event.preventDefault();
-  const name = (<HTMLInputElement>document.querySelector('#name-input')).value;
-  const surname = (<HTMLInputElement>document.querySelector('#surname-input'))
-    .value;
-  const thirdname = (<HTMLInputElement>(
-    document.querySelector('#thirdname-input')
-  )).value;
-  const profession = (<HTMLInputElement>(
-    document.querySelector('#profession-input')
-  )).value;
-  const personalType = (<HTMLSelectElement>(
-    document.querySelector('#pers-select')
-  )).value;
-  const group = (<HTMLSelectElement>document.querySelector('#groups-list'))
-    .value;
-  const previousDate = (<HTMLInputElement>(
-    document.querySelector('#previous-date')
-  )).value;
-  const reason = (<HTMLSelectElement>document.querySelector('#reasons-list'))
-    .value;
-  const departament = (<HTMLInputElement>(
-    document.querySelector('#departament-input')
-  )).value;
+  const name = (<HTMLParagraphElement>document.getElementById('name')).innerHTML;
+  const profession = (<HTMLParagraphElement>document.getElementById('profession')).innerHTML;
+  const category = (<HTMLParagraphElement>document.getElementById('category')).innerHTML;
+  const group = (<HTMLParagraphElement>document.getElementById('group')).innerHTML;
+  const previousDate = "12.03.1990"
+  const reason = 'Очередная'
+  const departament = (<HTMLParagraphElement>document.getElementById('dept')).innerHTML;
   currentUser.reason = reason;
   currentUser.name = name;
-  currentUser.surname = surname;
-  currentUser.thirdname = thirdname;
   currentUser.profession = profession;
-  currentUser.personalType = personalType;
+  currentUser.category = category;
   currentUser.group = group;
-  currentUser.previousDate = previousDate.split('-').reverse().join('.');
+  currentUser.previousDate = previousDate
   currentUser.departament = departament;
   createHeading();
   createTest();
@@ -68,60 +43,40 @@ function submitHandler(event: Event): void {
 export default function createLoginForm(): void {
   const container = <HTMLDivElement>document.querySelector('.container');
   container.innerHTML = '';
+  const headerContainer = <HTMLHeadElement>document.createElement('header');
   const formTitle = <HTMLHeadingElement>document.createElement('h1');
   formTitle.innerHTML = '⚡Проверка знаний по электробезопасности⚡';
+  const formTopSection = <HTMLDivElement>document.createElement('div');
+  formTopSection.classList.add('form_top-section')
   const loginForm = <HTMLFormElement>document.createElement('form');
+  const certificateSection = <HTMLDivElement>document.createElement('div');
+  certificateSection.classList.add('certificate-section')
   loginForm.method = 'get';
   loginForm.classList.add('login-form');
-
-  const departament = createSelect(
-    departaments,
-    'departaments-select',
-    'Подразделение',
-  );
-
-  function fillSelect(value) {
-    const employeesNames = employeesBase
-      .filter((element) => element.departament === value)
-      .map((el) => el.employees.map((e) => e.name));
-    createSelect(employeesNames, '', '');
-  }
-
-  function onSelectChange(event: Event) {
-    const target = <HTMLSelectElement>event.target;
-    const selectedValue = target.value;
-    console.log(selectedValue);
-    fillSelect(selectedValue);
-  }
-
-  departament.addEventListener('change', (event) => onSelectChange(event));
-
-  const employeeName = createSelect(employeesNames[0], 'fio-select', 'ФИО');
-
-  const persSelect = createSelect(
-    personalTypes,
-    'pers-select',
-    'Категория персонала',
-  );
-  const reasonsSelect = createSelect(
-    reasons,
-    'reasons-list',
-    'Укажите причину проверки',
-  );
-  const groupsSelect = createSelect(groups, 'groups-list', 'Группа');
-
-  const currentGroupTitle = document.createElement('h2');
-  currentGroupTitle.innerHTML = 'Предыдущая проверка знаний';
-  const currentGroupText = <HTMLHeadingElement>document.createElement('p');
-  currentGroupText.classList.add('group-text');
-  currentGroupText.innerHTML = 'Группа';
-  const loginBtn = createBtn('login-btn', 'Начать тест!', ButtonTypes.Submit);
-
-  container.append(formTitle, loginForm);
-
-  loginForm.append(departament, employeeName, persSelect);
-
-  loginForm.append(currentGroupTitle, groupsSelect, reasonsSelect);
-  loginForm.append(loginBtn);
+  const departament = createDeptSelect(departaments)
+  container.append(headerContainer,formTitle, loginForm);
+  formTopSection.append(departament)
+  const btn = createBtn('login-btn', 'Начать тест!', ButtonTypes.Submit )
+  const protocolBtn = createBtn('login-btn', 'Получить протокол!', ButtonTypes.Button)
+  protocolBtn.addEventListener('click', ()=>{
+  const name = (<HTMLParagraphElement>document.getElementById('name')).innerHTML;
+  const profession = (<HTMLParagraphElement>document.getElementById('profession')).innerHTML;
+  const category = (<HTMLParagraphElement>document.getElementById('category')).innerHTML;
+  const group = (<HTMLParagraphElement>document.getElementById('group')).innerHTML;
+  const previousDate = "12.03.1990"
+  const reason = 'Очередная'
+  const departament = (<HTMLParagraphElement>document.getElementById('dept')).innerHTML;
+  currentUser.reason = reason;
+  currentUser.name = name;
+  currentUser.profession = profession;
+  currentUser.category = category;
+  currentUser.group = group;
+  currentUser.previousDate = previousDate
+  currentUser.departament = departament;
+  
+    generateProtocol()
+  })
+  loginForm.append(formTopSection,certificateSection,btn,protocolBtn)
+  createClosedSertificate()
   loginForm.addEventListener('submit', submitHandler);
 }

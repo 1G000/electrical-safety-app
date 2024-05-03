@@ -10,7 +10,7 @@ export function createHeading() {
     container.innerHTML = '';
     const heading = document.createElement('p');
     heading.classList.add('heading');
-    heading.innerHTML = `Приветствуем Вас, ${currentUser.name} ${currentUser.thirdname}!`;
+    heading.innerHTML = `Приветствуем Вас, ${currentUser.name}!`;
     container.append(heading);
   }
 }

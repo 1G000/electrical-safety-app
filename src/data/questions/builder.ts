@@ -180,7 +180,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Фамилия, имя, отчество: ${currentUser.surname} ${currentUser.name} ${currentUser.thirdname}`,
+                text: `Фамилия, имя, отчество: ${currentUser.name}`,
                 size: 24,
               }),
             ],
@@ -352,7 +352,7 @@ export default function generateProtocol() {
             },
             children: [
               new docx.TextRun({
-                text: `Допущен к работе в качестве: ${currentUser.personalType} персонал`,
+                text: `Допущен к работе в качестве: ${currentUser.category} персонал`,
                 size: 24,
               }),
             ],
@@ -450,7 +450,7 @@ export default function generateProtocol() {
   docx.Packer.toBlob(doc).then((blob) => {
     saveAs(
       blob,
-      `${currentUser.departament}_${currentUser.surname}_${currentUser.name}.docx`,
+      `${currentUser.departament}_${currentUser.name}.docx`,
     );
   });
 }
